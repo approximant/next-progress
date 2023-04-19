@@ -45,6 +45,11 @@ export interface NextNProgressProps {
    * @default undefined
    */
   nonce?: string;
+  /**
+   * Debounce the progress bar so it only shows up after a delay.
+   * Useful for fast navigations.
+   */
+  debounce?: number;
 
   /**
    * Use your custom CSS tag instead of the default one.
@@ -62,9 +67,11 @@ const NextNProgress = ({
   showOnShallow = true,
   options,
   nonce,
+  debounce = 150,
   transformCSS = (css) => <style nonce={nonce}>{css}</style>,
 }: NextNProgressProps) => {
   let timer: NodeJS.Timeout | null = null;
+  let debounceTimer: NodeJS.Timeout | null = null;
 
   React.useEffect(() => {
     if (options) {
@@ -88,10 +95,18 @@ const NextNProgress = ({
       shallow: boolean;
     }
   ) => {
-    if (!shallow || showOnShallow) {
+    if (shallow && !showOnShallow) {
+      return;
+    }
+
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
+    debounceTimer = setTimeout(() => {
       NProgress.set(startPosition);
       NProgress.start();
-    }
+    }, debounce);
   };
 
   const routeChangeEnd = (
@@ -102,6 +117,10 @@ const NextNProgress = ({
       shallow: boolean;
     }
   ) => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
     if (!shallow || showOnShallow) {
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
@@ -119,6 +138,10 @@ const NextNProgress = ({
       shallow: boolean;
     }
   ) => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
     if (!shallow || showOnShallow) {
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
