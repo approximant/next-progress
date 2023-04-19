@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-progressbar",
+  "name": "@sqrlplanner/nextjs-progressbar",
   "version": "0.0.16",
   "description": "Nprogress component for Next.js app.",
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apal21/nextjs-progressbar.git"
+    "url": "git+https://github.com/sqrl-planner/nextjs-progressbar.git"
   },
   "keywords": [
     "Nprogress",
@@ -24,9 +24,9 @@
   "author": "Apal Shah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/apal21/nextjs-progressbar/issues"
+    "url": "https://github.com/sqrl-planner/nextjs-progressbar/issues"
   },
-  "homepage": "https://github.com/apal21/nextjs-progressbar#readme",
+  "homepage": "https://github.com/sqrl-planner/nextjs-progressbar#readme",
   "files": [
     "dist/**/*.js*",
     "dist/**/*.mjs*",
