@@ -60,18 +60,19 @@ export interface NextNProgressProps {
 }
 
 const NextNProgress = ({
-  color = '#29D',
+  color = '#f00',
   startPosition = 0.3,
   stopDelayMs = 200,
   height = 3,
   showOnShallow = true,
   options,
   nonce,
-  debounce = 150,
+  debounce = 300,
   transformCSS = (css) => <style nonce={nonce}>{css}</style>,
 }: NextNProgressProps) => {
   let timer: NodeJS.Timeout | null = null;
   let debounceTimer: NodeJS.Timeout | null = null;
+  let isStarted = false;
 
   React.useEffect(() => {
     if (options) {
@@ -95,15 +96,14 @@ const NextNProgress = ({
       shallow: boolean;
     }
   ) => {
-    if (shallow && !showOnShallow) {
-      return;
-    }
+    if (shallow && !showOnShallow) return;
 
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
 
     debounceTimer = setTimeout(() => {
+      isStarted = true;
       NProgress.set(startPosition);
       NProgress.start();
     }, debounce);
@@ -117,16 +117,18 @@ const NextNProgress = ({
       shallow: boolean;
     }
   ) => {
-    if (debounceTimer) {
+    if (debounceTimer && !isStarted) {
       clearTimeout(debounceTimer);
+      return;
     }
 
-    if (!shallow || showOnShallow) {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        NProgress.done(true);
-      }, stopDelayMs);
-    }
+    if (shallow && !showOnShallow) return;
+
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      isStarted = false;
+      NProgress.done(true);
+    }, stopDelayMs);
   };
 
   const routeChangeError = (
@@ -138,16 +140,17 @@ const NextNProgress = ({
       shallow: boolean;
     }
   ) => {
-    if (debounceTimer) {
+    if (debounceTimer && !isStarted) {
       clearTimeout(debounceTimer);
+      return;
     }
 
-    if (!shallow || showOnShallow) {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        NProgress.done(true);
-      }, stopDelayMs);
-    }
+    if (shallow && !showOnShallow) return;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      isStarted = false;
+      NProgress.done(true);
+    }, stopDelayMs);
   };
 
   return transformCSS(`

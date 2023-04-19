@@ -1,6 +1,6 @@
 {
   "name": "@sqrlplanner/nextjs-progressbar",
-  "version": "0.0.16",
+  "version": "0.1.0",
   "description": "Nprogress component for Next.js app.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
     "Next.js",
     "Progressbar"
   ],
-  "author": "Apal Shah",
+  "author": "Eamon Ma",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sqrl-planner/nextjs-progressbar/issues"
@@ -52,6 +52,5 @@
     "react": "^18.2.0",
     "tsup": "^6.2.3",
     "typescript": "^4.8.4"
-  },
-  "packageManager": "yarn@3.2.4"
+  }
 }
