@@ -1,15 +1,16 @@
-# Next.js Progressbar
+# Next.js Progressbar with debounce
+
+This is a fork of [nextjs-progressbar](https://github.com/apal21/nextjs-progressbar) by [apal21](https://https://github.com/apal21). It adds an optional debounce to the progress bar to prevent it from flickering when the page loads quickly.
+
+---
 
 A simple Next.js progressbar component using [NProgress](http://ricostacruz.com/nprogress/).
 
-> [I've created this Blog to help you create your own progressbar](https://gosink.in/next-js-make-your-own-progress-bar-indicator-component-easily/)
-
-**Demo**: [https://demo-nextjs-progressbar.vercel.app](https://demo-nextjs-progressbar.vercel.app/)
 
 ## How to install?
 
 ```bash
-npm i nextjs-progressbar
+npm i @sqrlplanner/nextjs-progressbar
 ```
 
 ## How to use?
@@ -17,13 +18,13 @@ npm i nextjs-progressbar
 After installing the package, import `NextNProgress` in your `pages/_app.js` file:
 
 ```js
-import NextNProgress from 'nextjs-progressbar';
+import NextNProgress from '@sqrlplanner/nextjs-progressbar';
 ```
 
 And for rendering add `<NextNProgress />` to your `return()` in `MyApp()`:
 
 ```js
-import NextNProgress from 'nextjs-progressbar';
+import NextNProgress from '@sqrlplanner/nextjs-progressbar';
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -40,9 +41,17 @@ export default function MyApp({ Component, pageProps }) {
 If no props are passed to `<NextNProgress />`, below is the default configuration applied.
 
 ```jsx
-<NextNProgress color="#29D" startPosition={0.3} stopDelayMs={200} height={3} showOnShallow={true} />
+<NextNProgress 
+  debounce={300}
+  color="#29D"
+  startPosition={0.3}
+  stopDelayMs={200}
+  height={3}
+  showOnShallow={true}  
+  />
 ```
 
+- **`debounce`: Debounce time in `ms`. The progress bar will not be shown if the page loads in less than this time.**
 - `color`: to change the default color of progressbar. You can also use `rgb(,,)` or `rgba(,,,)`.
 - `startPosition`: to set the default starting position : `0.3 = 30%`.
 - `stopDelayMs`: time for delay to stop progressbar in `ms`.
