@@ -60,7 +60,7 @@ export interface NextNProgressProps {
 }
 
 const NextNProgress = ({
-  color = '#f00',
+  color = '#29D',
   startPosition = 0.3,
   stopDelayMs = 200,
   height = 3,
