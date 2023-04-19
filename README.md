@@ -1,4 +1,4 @@
-# Next.js Progressbar with debounce
+# Next.js progress bar with debounce
 
 This is a fork of [nextjs-progressbar](https://github.com/apal21/nextjs-progressbar) by [apal21](https://github.com/apal21). It adds an optional debounce to the progress bar to prevent it from flickering when the page loads quickly.
 
@@ -7,41 +7,30 @@ This is a fork of [nextjs-progressbar](https://github.com/apal21/nextjs-progress
 A simple Next.js progressbar component using [NProgress](http://ricostacruz.com/nprogress/).
 
 
-## How to install?
+## Usage
 
-```bash
-npm i @sqrlplanner/nextjs-progressbar
-```
-
-## How to use?
-
-After installing the package, import `NextNProgress` in your `pages/_app.js` file:
+After installing the package, import `NextProgress` in your `pages/_app.tsx` file and add `<NextProgress />` to the render function in `App`:
 
 ```js
-import NextNProgress from '@sqrlplanner/nextjs-progressbar';
-```
+import NextProgress from '@approximant/next-progress';
 
-And for rendering add `<NextNProgress />` to your `return()` in `MyApp()`:
-
-```js
-import NextNProgress from '@sqrlplanner/nextjs-progressbar';
-
-export default function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   return (
     <>
-      <NextNProgress />
+      <NextProgress />
       <Component {...pageProps} />;
     </>
   );
 }
 ```
 
-### Default Config
+### Default config
 
-If no props are passed to `<NextNProgress />`, below is the default configuration applied.
+If no props are passed to `<NextProgress />`, the default configuration is applied.
 
 ```jsx
-<NextNProgress 
+// Default config
+<NextProgress 
   debounce={300}
   color="#29D"
   startPosition={0.3}
@@ -58,14 +47,14 @@ If no props are passed to `<NextNProgress />`, below is the default configuratio
 - `height`: height of progressbar in `px`.
 - `showOnShallow`: You can choose whether you want the progressbar to be displayed if you're using shallow routing. It takes a boolean. Learn more about shallow routing [in Next.js docs](https://nextjs.org/docs/routing/shallow-routing).
 
-### Advanced Config
+### Advanced config
 
 #### Adding nonce
 
-We use internal css in this package. If you are using csp, you can add nonce to the `<style>` tag by providing `nonce` prop to `<NextNProgress />` component.
+We use internal css in this package. If you are using csp, you can add nonce to the `<style>` tag by providing `nonce` prop to `<NextProgress />` component.
 
 ```jsx
-<NextNProgress nonce="my-nonce" />
+<NextProgress nonce="my-nonce" />
 ```
 
 #### Custom CSS
@@ -74,7 +63,7 @@ You can use `transformCSS` prop to pass custom css.
 **Note:** You must return a `JSX.Element` from the function.
 
 ```jsx
-<NextNProgress
+NextProgress<
   transformCSS={(css) => {
     // css is the default css string. You can modify it and return it or return your own css.
     return <style>{css}</style>;
@@ -82,10 +71,10 @@ You can use `transformCSS` prop to pass custom css.
 />
 ```
 
-#### Other Configs
+#### Other config
 
 You can use [other configurations](https://github.com/rstacruz/nprogress#configuration) which NProgress provides by adding a JSON in `options` props.
 
 ```jsx
-<NextNProgress options={{ easing: 'ease', speed: 500 }} />
+<NextProgress options={{ easing: 'ease', speed: 500 }} />
 ```

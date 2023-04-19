@@ -9,7 +9,7 @@ import * as NProgress from 'nprogress';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-export interface NextNProgressProps {
+export interface NextProgressProps {
   /**
    * The color of the bar.
    * @default "#29D"
@@ -59,7 +59,7 @@ export interface NextNProgressProps {
   transformCSS?: (css: string) => JSX.Element;
 }
 
-const NextNProgress = ({
+const NextProgress = ({
   color = '#29D',
   startPosition = 0.3,
   stopDelayMs = 200,
@@ -69,7 +69,7 @@ const NextNProgress = ({
   nonce,
   debounce = 300,
   transformCSS = (css) => <style nonce={nonce}>{css}</style>,
-}: NextNProgressProps) => {
+}: NextProgressProps) => {
   let timer: NodeJS.Timeout | null = null;
   let debounceTimer: NodeJS.Timeout | null = null;
   let isStarted = false;
@@ -146,6 +146,7 @@ const NextNProgress = ({
     }
 
     if (shallow && !showOnShallow) return;
+
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       isStarted = false;
@@ -223,7 +224,7 @@ const NextNProgress = ({
   `);
 };
 
-NextNProgress.propTypes = {
+NextProgress.propTypes = {
   color: PropTypes.string,
   startPosition: PropTypes.number,
   stopDelayMs: PropTypes.number,
@@ -234,4 +235,4 @@ NextNProgress.propTypes = {
   transformCSS: PropTypes.func,
 };
 
-export default React.memo(NextNProgress);
+export default React.memo(NextProgress);
