@@ -1,8 +1,7 @@
 # Next.js progress bar with debounce
 
-This is a fork of [nextjs-progressbar](https://github.com/apal21/nextjs-progressbar) by [apal21](https://github.com/apal21). It adds an optional debounce to the progress bar to prevent it from flickering when the page loads quickly.
-
----
+> **Note**
+> This is a fork of [nextjs-progressbar](https://github.com/apal21/nextjs-progressbar) by [apal21](https://github.com/apal21). It adds an optional debounce to the progress bar to prevent it from flickering when the page loads quickly.
 
 A simple Next.js progressbar component using [NProgress](http://ricostacruz.com/nprogress/).
 
