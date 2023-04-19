@@ -1,6 +1,6 @@
 {
   "name": "@sqrlplanner/nextjs-progressbar",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Nprogress component for Next.js app.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
