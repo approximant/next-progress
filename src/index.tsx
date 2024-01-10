@@ -9,6 +9,10 @@ import * as NProgress from 'nprogress';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
+interface RouteProps {
+  shallow: boolean;
+}
+
 export interface NextProgressProps {
   /**
    * The color of the bar.
@@ -90,13 +94,9 @@ const NextProgress = ({
 
   const routeChangeStart = (
     _: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
+    cfg: RouteProps
   ) => {
-    if (shallow && !showOnShallow) return;
+    if (cfg?.shallow && !showOnShallow) return;
 
     if (debounceTimer) {
       clearTimeout(debounceTimer);
@@ -110,19 +110,12 @@ const NextProgress = ({
   };
 
   const routeChangeEnd = (
-    _: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
+    _: string
   ) => {
     if (debounceTimer && !isStarted) {
       clearTimeout(debounceTimer);
       return;
     }
-
-    if (shallow && !showOnShallow) return;
 
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
@@ -133,19 +126,12 @@ const NextProgress = ({
 
   const routeChangeError = (
     _err: Error,
-    _url: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
+    _url: string
   ) => {
     if (debounceTimer && !isStarted) {
       clearTimeout(debounceTimer);
       return;
     }
-
-    if (shallow && !showOnShallow) return;
 
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
