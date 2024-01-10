@@ -76,7 +76,6 @@ const NextProgress = ({
 }: NextProgressProps) => {
   let timer: NodeJS.Timeout | null = null;
   let debounceTimer: NodeJS.Timeout | null = null;
-  let isStarted = false;
 
   React.useEffect(() => {
     if (options) {
@@ -102,28 +101,33 @@ const NextProgress = ({
       clearTimeout(debounceTimer);
     }
 
+    console.log('routeChangeStart', _);
+
     debounceTimer = setTimeout(() => {
-      isStarted = true;
       NProgress.set(startPosition);
       NProgress.start();
+
+      console.log('routeChangeStart: debounce fired', _);
     }, debounce);
   };
 
   const routeChangeEnd = (
-    _: string,
-    cfg: RouteProps
+    _: string
   ) => {
-    if (debounceTimer && !isStarted) {
+    if (debounceTimer) {
       clearTimeout(debounceTimer);
-      return;
     }
 
-    if (cfg?.shallow && !showOnShallow) return;
+    if (timer) {
+      clearTimeout(timer);
+    }
 
-    if (timer) clearTimeout(timer);
+    console.log('routeChangeEnd', _);
+
     timer = setTimeout(() => {
-      isStarted = false;
       NProgress.done(true);
+
+      console.log('routeChangeEnd: stop fired', _);
     }, stopDelayMs);
   };
 
@@ -131,15 +135,20 @@ const NextProgress = ({
     _err: Error,
     _url: string
   ) => {
-    if (debounceTimer && !isStarted) {
+    if (debounceTimer) {
       clearTimeout(debounceTimer);
-      return;
     }
 
-    if (timer) clearTimeout(timer);
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    console.log('routeChangeError', _err, _url);
+
     timer = setTimeout(() => {
-      isStarted = false;
       NProgress.done(true);
+
+      console.log('routeChangeError: stop fired', _err, _url);
     }, stopDelayMs);
   };
 
