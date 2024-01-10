@@ -101,13 +101,10 @@ const NextProgress = ({
       clearTimeout(debounceTimer);
     }
 
-    console.log('routeChangeStart', _);
-
     debounceTimer = setTimeout(() => {
       NProgress.set(startPosition);
       NProgress.start();
 
-      console.log('routeChangeStart: debounce fired', _);
     }, debounce);
   };
 
@@ -122,13 +119,9 @@ const NextProgress = ({
       clearTimeout(timer);
     }
 
-    console.log('routeChangeEnd', _);
-
     timer = setTimeout(() => {
-      NProgress.done(true);
-
-      console.log('routeChangeEnd: stop fired', _);
-    }, stopDelayMs);
+      NProgress.done();
+      }, stopDelayMs);
   };
 
   const routeChangeError = (
@@ -143,13 +136,9 @@ const NextProgress = ({
       clearTimeout(timer);
     }
 
-    console.log('routeChangeError', _err, _url);
-
     timer = setTimeout(() => {
-      NProgress.done(true);
-
-      console.log('routeChangeError: stop fired', _err, _url);
-    }, stopDelayMs);
+      NProgress.done();
+      }, stopDelayMs);
   };
 
   return transformCSS(`
