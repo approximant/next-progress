@@ -110,17 +110,17 @@ const NextProgress = ({
   };
 
   const routeChangeEnd = (
-    _: string
+    _: string,
+    cfg: RouteProps
   ) => {
     if (debounceTimer && !isStarted) {
       clearTimeout(debounceTimer);
       return;
     }
 
-    if (timer) {
-      clearTimeout(timer);
-    }
+    if (cfg?.shallow && !showOnShallow) return;
 
+    if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       isStarted = false;
       NProgress.done(true);
@@ -136,10 +136,7 @@ const NextProgress = ({
       return;
     }
 
-    if (timer) {
-      clearTimeout(timer);
-    }
-
+    if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       isStarted = false;
       NProgress.done(true);
