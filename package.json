@@ -1,6 +1,6 @@
 {
-  "name": "@approximant/next-progress",
-  "version": "0.1.0",
+  "name": "@audiu/next-progress",
+  "version": "0.1.6",
   "description": "NProgress component for Next.js app.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/approximant/next-progress.git"
+    "url": "git+https://github.com/audiu/next-progress.git"
   },
   "keywords": [
     "Nprogress",
@@ -24,7 +24,8 @@
   "author": "Eamon Ma",
   "contributors": [
     "Eamon Ma",
-    "Apal Shah"
+    "Apal Shah",
+    "Mike Goodfellow"
   ],
   "license": "MIT",
   "bugs": {

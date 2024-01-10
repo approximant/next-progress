@@ -9,6 +9,10 @@ import * as NProgress from 'nprogress';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
+interface RouteProps {
+  shallow: boolean;
+}
+
 export interface NextProgressProps {
   /**
    * The color of the bar.
@@ -72,7 +76,6 @@ const NextProgress = ({
 }: NextProgressProps) => {
   let timer: NodeJS.Timeout | null = null;
   let debounceTimer: NodeJS.Timeout | null = null;
-  let isStarted = false;
 
   React.useEffect(() => {
     if (options) {
@@ -90,68 +93,52 @@ const NextProgress = ({
 
   const routeChangeStart = (
     _: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
+    cfg: RouteProps
   ) => {
-    if (shallow && !showOnShallow) return;
+    if (cfg?.shallow && !showOnShallow) return;
 
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
 
     debounceTimer = setTimeout(() => {
-      isStarted = true;
       NProgress.set(startPosition);
       NProgress.start();
+
     }, debounce);
   };
 
   const routeChangeEnd = (
-    _: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
+    _: string
   ) => {
-    if (debounceTimer && !isStarted) {
+    if (debounceTimer) {
       clearTimeout(debounceTimer);
-      return;
     }
 
-    if (shallow && !showOnShallow) return;
+    if (timer) {
+      clearTimeout(timer);
+    }
 
-    if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
-      isStarted = false;
-      NProgress.done(true);
-    }, stopDelayMs);
+      NProgress.done();
+      }, stopDelayMs);
   };
 
   const routeChangeError = (
     _err: Error,
-    _url: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
+    _url: string
   ) => {
-    if (debounceTimer && !isStarted) {
+    if (debounceTimer) {
       clearTimeout(debounceTimer);
-      return;
     }
 
-    if (shallow && !showOnShallow) return;
+    if (timer) {
+      clearTimeout(timer);
+    }
 
-    if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
-      isStarted = false;
-      NProgress.done(true);
-    }, stopDelayMs);
+      NProgress.done();
+      }, stopDelayMs);
   };
 
   return transformCSS(`
