@@ -76,6 +76,7 @@ const NextProgress = ({
 }: NextProgressProps) => {
   let timer: NodeJS.Timeout | null = null;
   let debounceTimer: NodeJS.Timeout | null = null;
+  let isStarted = false;
 
   React.useEffect(() => {
     if (options) {
@@ -102,6 +103,7 @@ const NextProgress = ({
     }
 
     debounceTimer = setTimeout(() => {
+      isStarted = true;
       NProgress.set(startPosition);
       NProgress.start();
     }, debounce);
@@ -110,8 +112,9 @@ const NextProgress = ({
   const routeChangeEnd = (
     _: string
   ) => {
-    if (debounceTimer) {
+    if (debounceTimer && !isStarted) {
       clearTimeout(debounceTimer);
+      return;
     }
 
     if (timer) {
@@ -119,6 +122,7 @@ const NextProgress = ({
     }
 
     timer = setTimeout(() => {
+      isStarted = false;
       NProgress.done(true);
     }, stopDelayMs);
   };
@@ -127,8 +131,9 @@ const NextProgress = ({
     _err: Error,
     _url: string
   ) => {
-    if (debounceTimer) {
+    if (debounceTimer && !isStarted) {
       clearTimeout(debounceTimer);
+      return;
     }
 
     if (timer) {
@@ -136,6 +141,7 @@ const NextProgress = ({
     }
 
     timer = setTimeout(() => {
+      isStarted = false;
       NProgress.done(true);
     }, stopDelayMs);
   };
